@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ApplicationFiller — Profiles & Settings</title><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="options.css"></head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="mark"><svg class="icon"><use href="icons.svg#briefcase"/></svg></div><div><h1>ApplicationFiller</h1><div class="eyebrow">Your application workspace</div></div></div>
+  <p class="sidebar-intro">Information you save once, ready for the next application.</p>
+  <nav aria-label="Workspace sections">
+    <button class="nav-btn selected" data-view="personal"><svg class="icon"><use href="icons.svg#user"/></svg>Personal information</button>
+    <button class="nav-btn" data-view="profiles"><svg class="icon"><use href="icons.svg#briefcase"/></svg>Role profiles</button>
+    <button class="nav-btn" data-view="additional"><svg class="icon"><use href="icons.svg#spark"/></svg>Additional inputs</button>
+    <button class="nav-btn" data-view="history"><svg class="icon"><use href="icons.svg#clock"/></svg>Application history</button>
+    <button class="nav-btn" data-view="learned"><svg class="icon"><use href="icons.svg#spark"/></svg>Learned information</button>
+    <button class="nav-btn" data-view="settings"><svg class="icon"><use href="icons.svg#settings"/></svg>Settings & privacy</button>
+  </nav>
+  <div class="sidebar-bottom"><svg class="icon success"><use href="icons.svg#shield"/></svg><span>Applicant information is saved locally. School name searches and public wage lookups use internet sources.</span></div>
+</aside>
+<div class="content"><header class="content-head"><div><div class="eyebrow" id="kicker">YOUR INFORMATION</div><h1 id="view-title">Personal information</h1><p id="view-description">These details are shared across all application profiles.</p></div><div class="row"><span class="save-note" id="saved-indicator">All changes saved</span><button id="save-now" class="btn small">Save now</button></div></header>
+<main>
+  <section id="view-personal" class="view stack">
+    <section class="card panel"><div class="section-heading"><div><h2>Contact details & address</h2><p>Save your address once, whether you live in a house, apartment, dorm, or another residence. Address line 2 is optional; leave it blank if it doesn't apply. This information stays in Firefox local storage.</p></div><svg class="icon muted"><use href="icons.svg#user"/></svg></div>
+      <div class="form-grid" id="personal-fields"></div>
+    </section>
+    <section class="card panel"><div class="section-heading"><div><h2>Eligibility & self-identification</h2><p>Use your confirmed answers. For veteran or disability status, selecting Yes will require review on the application.</p></div><svg class="icon muted"><use href="icons.svg#shield"/></svg></div>
+      <div class="form-grid" id="eligibility-fields"></div>
+      <div class="citizenship-editor"><h3>Countries of citizenship</h3><p class="hint">Add every country where you currently hold citizenship. Citizenship is separate from residence, nationality/ethnicity, and birthplace.</p>
+      <div id="citizenship-list" class="stack"></div><button id="add-citizenship" type="button" class="btn small">+ Add citizenship</button>
+      <label class="setting-row"><div><strong>My citizenship list is complete</strong><p>Confirm this before the extension can automatically answer No to questions about citizenship in other countries.</p></div><input id="citizenships-complete" type="checkbox"/></label></div>
+    </section>
+  </section>
+  <section id="view-profiles" class="view stack hide">
+    <div class="card panel"><div class="section-heading"><div><h2>Choose your role profile</h2><p>Keep one shared identity, with different resumes and project details for each role.</p></div><button id="new-profile" class="btn small"><svg class="icon"><use href="icons.svg#plus"/></svg>New profile</button></div>
+      <div class="row profile-row"><label class="field grow">Active profile<select id="profile-picker"></select></label><button class="btn small danger" id="delete-profile" title="Delete this profile"><svg class="icon"><use href="icons.svg#trash"/></svg>Delete</button></div>
+    </div>
+    <section class="card panel"><div class="section-heading"><div><h2>Role focus</h2><p>Save the fundamentals once. Ollama decides which projects and details fit each application question.</p></div><svg class="icon muted"><use href="icons.svg#spark"/></svg></div><div class="stack" id="role-fields"></div></section>
+    <section class="card panel"><div class="section-heading"><div><h2>Resume document</h2><p>Upload a resume once. Text-based PDFs can be read locally; image-only/scanned PDFs are not supported.</p></div><svg class="icon muted"><use href="icons.svg#file"/></svg></div>
+      <label class="file-upload"><svg class="icon"><use href="icons.svg#upload"/></svg><span><strong id="resume-name">Choose resume</strong><small>Text PDFs and TXT for extraction · PDF/DOCX for attachment · Up to 6 MB</small></span><input type="file" id="resume-file" accept=".pdf,.doc,.docx,.txt"/></label>
+      <div class="row" style="margin-top:12px"><button id="remove-resume" class="btn small danger">Remove saved resume</button></div>
+      <div class="importer"><div><h3>Read resume & extract details</h3><p class="muted">Read text directly from a saved, text-based PDF or TXT resume, or paste it below. No cloud service is used. A running local Ollama model extracts facts into a reviewable draft. Projects are not imported as employment, and existing details are preserved. Scanned/image-only PDFs are not supported; DOC/DOCX can be attached but are not parsed.</p></div>
+      <label class="field">Extracted or pasted resume text<textarea id="resume-text" rows="3" placeholder="Paste resume text here if you prefer not to upload a document."></textarea></label>
+      <button class="btn" id="extract"><svg class="icon"><use href="icons.svg#spark"/></svg>Extract information</button>
+      <div id="extraction-preview" class="extraction hide"></div></div>
+    </section>
+    <section class="card panel"><div class="section-heading"><div><h2>Education</h2><p>Leave GPA and unknown information blank. School suggestions come from ROR; typing a search sends only the school name query to that service.</p></div><button class="btn small" id="add-education"><svg class="icon"><use href="icons.svg#plus"/></svg>Add school</button></div><div class="repeat-list" data-list="education" id="education-items"></div></section>
+    <section class="card panel"><div class="section-heading"><div><h2>Work experience</h2><p>Only employment and internships belong here. Academic and personal projects are kept in Projects, even if they appear under an Experience heading on your resume.</p></div><button class="btn small" id="repair-experience" type="button">Review misplaced projects</button><button class="btn small" id="add-experience"><svg class="icon"><use href="icons.svg#plus"/></svg>Add role</button></div><div class="repeat-list" data-list="experience" id="experience-items"></div></section>
+    <section class="card panel"><div class="section-heading"><div><h2>Projects</h2><p>Keep the complete story of each project in one place. Ollama will adapt it to the question and character limit.</p></div><button class="btn small" id="add-projects"><svg class="icon"><use href="icons.svg#plus"/></svg>Add project</button></div><div class="repeat-list" data-list="projects" id="projects-items"></div></section>
+  </section>
+  <section id="view-additional" class="view stack hide">
+    <section class="card panel"><div class="section-heading"><div><h2>Optional additional inputs</h2><p>Extra context if you want it. None of these fields are required, and they never override the wording of a specific job application.</p></div><svg class="icon muted"><use href="icons.svg#spark"/></svg></div>
+      <label class="setting-row"><div><strong>Reject foreign spy ragebait</strong><p>For direct foreign-citizenship questions, automatically select No only when you've confirmed a complete citizenship list that excludes that country. Select Yes for confirmed additional citizenships. Does not guess residency, birthplace, ancestry, or security-clearance answers.</p></div><input type="checkbox" id="reject-foreign-spy-ragebait" /></label>
+      <div id="additional-fields" class="stack"></div>
+      <div class="role-actions"><button id="suggest-focus" class="btn small" type="button"><svg class="icon"><use href="icons.svg#spark"/></svg> Suggest from saved information</button><p class="hint">Local AI can suggest optional context from confirmed facts. Review before saving.</p></div>
+      <div id="focus-preview" class="extraction hide"></div>
+    </section>
+  </section>
+  <section id="view-history" class="view stack hide">
+    <section class="card panel">
+      <div class="section-heading"><div><h2>Application history</h2><p>Opened, in-progress, and completed applications are tracked by the specific job listing. An open page is never treated as proof of submission.</p></div></div>
+      <div class="history-tabs" role="tablist" aria-label="Application history categories">
+        <button type="button" class="history-tab" id="history-tab-progress" role="tab" aria-controls="history-panel-progress" aria-selected="true" tabindex="0" data-history-tab="in_progress">In progress <span class="history-count" id="history-count-progress">0</span></button>
+        <button type="button" class="history-tab" id="history-tab-opened" role="tab" aria-controls="history-panel-opened" aria-selected="false" tabindex="-1" data-history-tab="opened">Opened <span class="history-count" id="history-count-opened">0</span></button>
+        <button type="button" class="history-tab" id="history-tab-completed" role="tab" aria-controls="history-panel-completed" aria-selected="false" tabindex="-1" data-history-tab="completed">Completed <span class="history-count" id="history-count-completed">0</span></button>
+        <button type="button" class="history-tab" id="history-tab-favorites" role="tab" aria-controls="history-panel-favorites" aria-selected="false" tabindex="-1" data-history-tab="favorites">★ Favorites <span class="history-count" id="history-count-favorites">0</span></button>
+      </div>
+      <div class="history-toolbar row wrap"><p class="hint">Each tab has its own list. Favorites can include jobs from any stage.</p><button class="btn small danger" type="button" id="history-clear-all">Clear all history</button></div>
+      <div id="history-panel-progress" role="tabpanel" aria-labelledby="history-tab-progress" class="history-panel" data-history-panel="in_progress"><div class="repeat-list history-items"></div></div>
+      <div id="history-panel-opened" role="tabpanel" aria-labelledby="history-tab-opened" class="history-panel hide" data-history-panel="opened" hidden><div class="repeat-list history-items"></div></div>
+      <div id="history-panel-completed" role="tabpanel" aria-labelledby="history-tab-completed" class="history-panel hide" data-history-panel="completed" hidden><div class="repeat-list history-items"></div></div>
+      <div id="history-panel-favorites" role="tabpanel" aria-labelledby="history-tab-favorites" class="history-panel hide" data-history-panel="favorites" hidden><div class="repeat-list history-items"></div></div>
+      <p class="hint">Completed requires confirmation of submission, not just a finished form. Star a listing to keep it in Favorites without changing its status. Deleting a listing also removes its favorite; clearing history does not affect your profiles.</p>
+    </section>
+  </section>
+  <section id="view-learned" class="view stack hide">
+    <section class="card panel">
+      <div class="section-heading"><div><h2>Learned information</h2><p>Answers learned after you review questions or continue through an employer's form. Check what was saved, edit mistakes, or remove answers you no longer want reused.</p></div></div>
+      <div class="learned-categories" role="tablist" aria-label="Learned answer sections">
+        <button type="button" data-learned-category="education" role="tab" aria-selected="true" tabindex="0">Education</button>
+        <button type="button" data-learned-category="employment" role="tab" aria-selected="false" tabindex="-1">Employment</button>
+        <button type="button" data-learned-category="general" role="tab" aria-selected="false" tabindex="-1">Other answers</button>
+        <button type="button" data-learned-category="all" role="tab" aria-selected="false" tabindex="-1">All</button>
+        <button type="button" data-learned-category="skipped" role="tab" aria-selected="false" tabindex="-1">Always skipped</button>
+      </div>
+      <div id="learned-main-panel">
+      <p class="hint">Answers with the same meaning are grouped within their section. School dates and employment dates are kept separate. Education details are also available under Role profiles.</p>
+      <div class="learned-toolbar row wrap">
+        <label class="field grow">Search questions or answers <input id="learned-search" type="search" placeholder="Search saved answers" autocomplete="off"></label>
+        <label class="field">Show <select id="learned-scope"><option value="all">All learned answers</option><option value="profile">Reusable across applications</option><option value="listing">Specific job only</option></select></label>
+        <button id="learned-clear-all" class="btn small danger" type="button">Clear learned answers</button>
+      </div>
+      <p class="hint" id="learned-count" role="status" aria-live="polite"></p>
+      <div id="learned-items" class="repeat-list"></div>
+      <h3>Question meanings</h3>
+      <p class="hint">Wordings you confirmed mean the same as a known question, so they share one saved answer. Remove one if it was wrong.</p>
+      <div id="intent-items" class="repeat-list"></div>
+      </div>
+      <div id="learned-skips-panel" hidden>
+      <div class="section-heading skip-list-heading"><div><h3>Questions to always skip</h3>
+        <p>Optional questions you've chosen not to answer. Remove a rule to be asked again.</p></div></div>
+      <div id="ignored-items" class="repeat-list"></div>
+      </div>
+      <p class="hint">A saved answer is reused when ApplicationFiller recognizes the same question for the same role profile. Company-specific responses stay tied to their original listing. Some unfamiliar or materially different wording still requires review.</p>
+    </section>
+  </section>
+  <section id="view-settings" class="view stack hide">
+    <section class="card panel"><div class="section-heading"><div><h2>Automation</h2><p>Automatic filling and intermediate navigation are always enabled until an answer needs attention or final submission is reached.</p></div></div><div id="automation-settings" class="setting-list"></div></section>
+    <section class="card panel"><div class="section-heading"><div><h2>Local AI (Ollama)</h2><p>Optional answer drafting and resume extraction run on your own computer. No OpenAI key or cloud account. Install Ollama, run <code>ollama pull llama3.2:3b</code>, then start Ollama locally. No applicant profile information is uploaded to a cloud AI service.</p></div></div>
+      <div class="stack"><label class="field">Ollama model<input id="model-name" placeholder="llama3.2:3b"></label><div class="row wrap"><button id="test-ollama" class="btn small">Test local AI connection</button><span class="help" id="ollama-status" role="status"></span></div><p class="hint">Ollama may require <code>OLLAMA_ORIGINS=moz-extension://*</code> (or your specific Firefox extension origin). Allowing the specific origin is more secure.</p></div>
+    </section>
+    <section class="card panel"><div class="section-heading"><div><h2>Browser history permission</h2><p>Optional. Grants visited-page hints only, never proof of submission.</p></div></div><div class="row spread"><span id="history-permission">Checking permission…</span><button id="toggle-history" class="btn small">Enable</button></div></section>
+    <section class="card panel"><div class="section-heading"><div><h2>Back up information</h2><p>Export or restore saved profile fields, answers, and history. The current export excludes uploaded resume file bytes.</p></div></div><div class="row wrap"><button id="export-data" class="btn"><svg class="icon"><use href="icons.svg#upload"/></svg>Export JSON</button><label class="btn file-action">Import JSON<input type="file" id="import-data" accept=".json"></label></div><p class="hint">Keep an external copy before temporarily uninstalling the extension. Uploaded resumes need to be reattached after restoring a backup.</p></section>
+  </section>
+  <div id="global-status" role="status" aria-live="polite" class="global-status hide"></div>
+</main></div></div>
+<script src="countries.js"></script><script src="data.js"></script><script src="profile-import.js"></script><script src="pdf-text.js"></script><script src="question-model.js"></script>
+  <script src="options.js"></script>
+</body></html>

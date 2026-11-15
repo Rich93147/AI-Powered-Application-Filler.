@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "ApplicationFiller",
+  "version": "1.0.0",
+  "description": "Local-first Firefox job application autofill with profiles and optional on-device AI.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation"
+  ],
+  "optional_permissions": [
+    "history"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://127.0.0.1:11434/*",
+    "http://localhost:11434/*",
+    "https://api.ror.org/*",
+    "https://www.bls.gov/*"
+  ],
+  "background": {
+    "scripts": [
+      "question-context.js",
+      "question-model.js",
+      "data.js",
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_title": "ApplicationFiller",
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "countries.js",
+        "question-context.js",
+        "question-model.js",
+        "autofill-core.js",
+        "content-script.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "applypilot-dev@example.org",
+      "strict_min_version": "121.0"
+    }
+  }
+}

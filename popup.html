@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ApplicationFiller</title><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <header class="top">
+    <div class="row"><div class="mark"><svg class="icon"><use href="icons.svg#briefcase"/></svg></div><div><h1>ApplicationFiller</h1><div class="eyebrow">Application assistant</div></div></div>
+    <button id="open-options" class="icon-btn" title="Profiles & settings" aria-label="Open profiles and settings"><svg class="icon"><use href="icons.svg#settings"/></svg></button>
+  </header>
+  <main class="stack">
+    <div class="card detection"><div class="row spread"><div class="row"><svg class="icon success" id="detection-icon"><use href="icons.svg#check"/></svg><strong id="detection-title">Checking this page</strong></div><span id="phase" class="pill neutral">Idle</span></div><p id="detection-detail">Looking for application fields…</p></div>
+    <section class="profile-choice"><label class="field" for="profile-select">Application profile<select id="profile-select" aria-label="Choose application profile"></select></label><span class="hint" id="profile-hint">Select a profile to use on this application.</span></section>
+    <div class="actions stack"><button id="fill" class="btn primary full"><svg class="icon"><use href="icons.svg#play"/></svg>Fill & continue</button><button id="favorite-listing" class="btn full hide" type="button" aria-pressed="false">☆ Favorite this job</button><button id="edit" class="btn full"><svg class="icon"><use href="icons.svg#user"/></svg>Update information<svg class="icon arrow-icon"><use href="icons.svg#chevron"/></svg></button></div>
+    <section class="summary"><div class="row spread"><h2>Application summary</h2><span class="hint">Current session</span></div>
+      <div class="stat-grid">
+        <div class="stat"><svg class="icon success"><use href="icons.svg#check"/></svg><strong id="stat-known" class="badge-num">0</strong><span>Known</span></div>
+        <div class="stat"><svg class="icon ink"><use href="icons.svg#pencil"/></svg><strong id="stat-generated" class="badge-num">0</strong><span>AI drafts</span></div>
+        <div class="stat"><svg class="icon amber"><use href="icons.svg#help"/></svg><strong id="stat-unknown" class="badge-num">0</strong><span>Unknown</span></div>
+      </div>
+      <p id="summary-note" class="hint">Your activity appears here after filling a form.</p>
+    </section>
+    <section id="review" class="review hide"><div class="row spread"><h2>Review & continue</h2><span id="pending-count" class="pill warn">0 questions</span></div><div id="pending-items" class="stack"></div><p class="hint">Leave optional questions blank and press Continue to move on. Check “Always skip” to remember a question across applications. Required questions still need answers; final submission is always yours.</p><button id="show-field" class="btn full">Go to first unanswered field</button><button id="continue" class="btn primary full"><svg class="icon"><use href="icons.svg#arrow"/></svg>Continue (skip unanswered optional)</button></section>
+    <section id="finish" class="card finish hide"><svg class="icon amber"><use href="icons.svg#shield"/></svg><div><strong>Final review required</strong><p>Verify your application on the site. ApplicationFiller will never press the final Submit button.</p><button id="mark-submitted" class="btn small">Mark as submitted</button></div></section>
+    <div id="status" class="status-line" role="status" aria-live="polite"></div>
+  </main>
+  <footer><span>Local-first storage · You control submission</span><button id="diagnose" class="stop" type="button" title="Copy a redacted report (no personal values) for debugging">Copy debug report</button><button id="stop" class="stop hide" title="Stop automatic navigation">Stop run</button></footer>
+  <script src="data.js"></script><script src="popup.js"></script>
+</body></html>
