@@ -14,7 +14,7 @@ Everything stays in your browser. No account, no server, no API key.
 - **Careful with touchy stuff.** "Protected veteran" isn't the same as "veteran", so a saved "Yes" for one won't get answered for the other. Questions about felonies, drug tests, and background checks are never answered automatically. Legal agreements are never ticked for you.
 - **Checks its own work.** After filling, it looks at the page again to make sure the right values actually landed. If a required field is still empty, or the site rejected something, it stops instead of pretending everything went fine.
 - **Learns your answers.** Answers you confirm get saved per role profile, so you aren't asked the same thing twice.
-- **Resumes.** It attaches the saved resume to upload fields. It can also read text out of a text-based PDF to help build a profile (scanned PDFs won't work).
+- **Resumes.** It attaches the saved resume to upload fields. It can also read text out of a text-based PDF to help build a profile (scanned PDFs won't work). **CONFIRM UPLOAD BEFORE SUBMITTING APPLICATION**. There has been a couple cases where a website refused the resume upload. Unsure how to fix, but honestly somewhat rare and a minor bug, so don't expect a fix anytime soon unless I strike gold.
 - **Application history.** Keeps track of what you've opened, started, finished, and favorited.
 - **Optional local AI.** If you run [Ollama](https://ollama.com/), it can draft written answers and help structure your resume. Drafts always stop for your review.
 
@@ -60,4 +60,4 @@ If a site fills in the wrong thing, open the application page, click the toolbar
 
 ## License
 
-I haven't picked one yet, so for now all rights are reserved.
+For now all rights are reserved.
